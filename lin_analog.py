@@ -5,9 +5,6 @@ adc = ADC(28)
 uart = UART(0, 115200)
 led = Pin(25, Pin.OUT)
 
-def readADC(fac):
-    return adc.read_u16() * fac / 65536
-
 def ADC_to_char():
     # Returns value in a range from 0 to 255
     # 255 represents [3.3 * (33 + 4.7 + 4.7 + 1.5) / (4.7 + 4.7 + 1.5)] Volts
@@ -19,10 +16,11 @@ def ADC_to_char():
 def main():
     factor = 3.3 * (33 + 4.7 + 4.7 + 1.5) / (4.7 + 4.7 + 1.5)
     led.on()
+
     while True:
-        # buf = [readADC(factor)]
-        buf = [char(ADC_to_char())]
+        buf = [ADC_to_char()]
         uart.write(bytes([buf[0]]))
+        print(buf[0])
 
 if __name__ == "__main__":
     main()
