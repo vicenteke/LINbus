@@ -17,7 +17,7 @@ def main():
     led.on()
 
     while True:
-        print(ADC_to_char(), ',', sep = '', end = ' ')
+        print(ADC_to_char())
 
 if __name__ == "__main__":
     main()
