@@ -1,8 +1,7 @@
-from machine import Pin, ADC, UART
-# from utime import sleep
+from machine import Pin, ADC
+from utime import sleep
 
 adc = ADC(28)
-uart = UART(0, 115200)
 led = Pin(25, Pin.OUT)
 
 def ADC_to_char():
@@ -18,9 +17,7 @@ def main():
     led.on()
 
     while True:
-        buf = [ADC_to_char()]
-        uart.write(bytes([buf[0]]))
-        print(buf[0])
+        print(ADC_to_char(), ',', end = ' ')
 
 if __name__ == "__main__":
     main()
