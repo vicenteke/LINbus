@@ -12,10 +12,10 @@ data_c_r = g.readlines()
 
 #Functions to convert raw data to voltage
 def treat_data_s_r():
-	return (13.291 / (256 - int(data_s_r[n])))
+	return (int(data_s_r[n])*13.291/256)
 	
 def treat_data_c_r():
-	return (13.291 / (256 - int(data_c_r[n])))
+	return (int(data_c_r[n])*13.291/256)
 	
 #Lists that hold the values to be displayed
 s_r_vals = [0] * 300
@@ -27,7 +27,7 @@ fig, ax = plt.subplots()
 line, = ax.plot(x_vals,s_r_vals, '#00FF00', label='Sem ruido')
 line2, = ax.plot(x_vals,c_r_vals, '#00FFFF', label='Com ruido')
 ax.legend()
-plt.axis([0,29,0,0.5])
+plt.axis([0,29,0,13.4])
 plt.xlabel('Time passed(s)')
 plt.ylabel('Voltage (V)')
 ax.set_facecolor('#000000')
