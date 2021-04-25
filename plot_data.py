@@ -12,27 +12,30 @@
 # First without the MCU connected and then with it connected
 # The new element is your <serial_port> value
 
-from lin_analog import ADC_to_char
+#from lin_analog import ADC_to_char
 import random
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import time, serial, argparse
 # If it doesn't work, try to import os, sys, time, serial, argparse, requests
 
-#parser = argparse.ArgumentParser(description='MCU to oscilloscope')
+parser = argparse.ArgumentParser(description='MCU to oscilloscope')
 
-#parser.add_argument('-d','--dev', help='MCU device descriptor file', default='/dev/ttyACM0')
+parser.add_argument('-d','--dev', help='MCU device descriptor file', default='/dev/ttyACM0')
 #parser.add_argument('-g','--debug', help='Only Debug', action='store_true')
 
-#DEBUG = args['debug']
-#if DEBUG:
-#	DEV = args['dev']
-#	MCU = serial.Serial(DEV, 9600)
-#else:
-#	MCU = 0
+args = vars(parser.parse_args())
+DEV = args['dev']
+MCU = serial.Serial(DEV, 115200)
 
 def treat_data():
-	return (13.291 / (256 - ord(ADC_to_char())))
+	global MCU
+	data = MCU.read(1)
+	#val = (13.291 / (256 - int.from_bytes(data, "big")))
+	val = int.from_bytes(data, "big") * .0521
+	print(int.from_bytes(data, "big"))
+	return val
+	#return (13.291 / (256 - int.from_bytes(data, "big")))
 	
 x_vals = [1,2,3,4,5,6,7,8,9,10]
 y_vals = [0,0,0,0,0,0,0,0,0,0]
@@ -49,10 +52,11 @@ def animate(i):
 	plt.plot(x_vals, y_vals, '#00FF00')
 	
 def main():
-#	global MCU
-#	MCU.open()
+	global MCU
+	MCU.close()
+	MCU.open()
 	
-	ani = FuncAnimation(plt.gcf(), animate, interval = 1000)
+	ani = FuncAnimation(plt.gcf(), animate, interval = 10)
 	plt.show()
 	
 if __name__ == "__main__":
