@@ -12,36 +12,48 @@
 # First without the MCU connected and then with it connected
 # The new element is your <serial_port> value
 
+from lin_analog import ADC_to_char
+import random
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import time, serial, argparse
 # If it doesn't work, try to import os, sys, time, serial, argparse, requests
 
-parser = argparse.ArgumentParser(description='MCU to oscilloscope')
+#parser = argparse.ArgumentParser(description='MCU to oscilloscope')
 
-parser.add_argument('-d','--dev', help='MCU device descriptor file', default='/dev/ttyACM0')
-parser.add_argument('-g','--debug', help='Only Debug', action='store_true')
+#parser.add_argument('-d','--dev', help='MCU device descriptor file', default='/dev/ttyACM0')
+#parser.add_argument('-g','--debug', help='Only Debug', action='store_true')
 
-DEBUG = args['debug']
-if DEBUG:
-	DEV = args['dev']
-	MCU = serial.Serial(DEV, 9600)
-else:
-	MCU = 0
+#DEBUG = args['debug']
+#if DEBUG:
+#	DEV = args['dev']
+#	MCU = serial.Serial(DEV, 9600)
+#else:
+#	MCU = 0
 
-i = 0
-def fake():
-	global i
-	i = i + 1
-	sleep(0.1)
-	return int(i / 30) % 13
+def treat_data():
+	return (13.291 / (256 - ord(ADC_to_char())))
+	
+x_vals = [1,2,3,4,5,6,7,8,9,10]
+y_vals = [0,0,0,0,0,0,0,0,0,0]
+	
+def animate(i):
+	y_vals.append(treat_data())
+	y_vals.pop(0)
+	plt.cla()
+	plt.xlabel('Time (s)')
+	plt.ylabel('Voltage (V)')
+	plt.ylim([0, 15])
+	plt.axes().set_facecolor('#000000')
+	plt.grid(True, color='0.05')
+	plt.plot(x_vals, y_vals, '#00FF00')
 	
 def main():
-	global MCU
-	MCU.open()
+#	global MCU
+#	MCU.open()
 	
-	while True:
-		#val = MCU.read(1)   # Gets the next value from MCU (blocking call).
-							# MCU is will send an analog read from LIN bus periodically
-		
-		val = fake() # Fakes readings from MCU, used for testing
-		
-		my_plot_value(val)  # Plots received values in an oscilloscope fashion
+	ani = FuncAnimation(plt.gcf(), animate, interval = 1000)
+	plt.show()
+	
+if __name__ == "__main__":
+	main()
