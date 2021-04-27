@@ -18,9 +18,9 @@ def treat_data_c_r():
 	return (int(data_c_r[n])*13.291/256)
 	
 #Lists that hold the values to be displayed
-s_r_vals = [0] * 300
-c_r_vals = [0] * 300
-x_vals = np.linspace(29,0,300)
+s_r_vals = [0] * 100
+c_r_vals = [0] * 100
+x_vals = np.linspace(29,0,100)
 
 #Graphic settings
 fig, ax = plt.subplots()
@@ -51,7 +51,7 @@ def animate(i):
 	
 	
 def main():
-	ani = FuncAnimation(fig, animate, interval = 100)
+	ani = FuncAnimation(fig, animate, interval = 1)
 	plt.show()
 	
 if __name__ == "__main__":
