@@ -1,0 +1,11 @@
+\begin{document}
+
+\IEEEPARstart{A}{} indústria automotiva vem aumentando a complexidade de seus sistemas eletrônicos ao longo dos últimos anos, com diversas unidades de controle eletrônico (ECU) gerenciando desde os sistemas e subsistemas mais simples até os mais críticos, como direção, freios, injeção, entre outros \cite{studnia:2013}. Todos estes se conectam em uma arquitetura composta por um vasto número de protocolos de comunicação utilizados pelo setor, assim que a compatibilidade entre estes e os custos associados a essa abordagem são fatores determinantes para o projeto de veículos neste momento \cite{gabriel:2003}.
+
+Cada um dos protocolos desenvolvidos tem características próprias e que adéquam-no para propósitos específicos. O \textit{Controller Area Network} (CAN) vem sendo a principal escolha desde os anos 80 dada sua confiabilidade e robustez, necessária para questões mais críticas e que comprometem a segurança dos passageiros \cite{ernst:2018}. Todavia, o seu custo mais elevado fez surgir o \textit{Local Interconnect Network} (LIN) que, apesar de ser menos sólido que o CAN, pode ser usado como uma alternativa menos custosa para subsistemas não-críticos \cite{xu2006application}.
+
+O presente trabalho traz a implementação de um sistema de comunicação usando o LIN. Dois microcontroladores se comunicam usando o protocolo, enquanto um terceiro microcontrolador faz a leitura dos níveis de tensão na linha e repassa a informação a um computador para gerar uma representação gráfica da comunicação em tempo real. Também, submeteu-se o sistema a ruídos externos e avaliou-se a influência desse fator sobre a linha de comunicação. Além disso, um método extra de detecção de erros foi adicionado à aplicação, trazendo maior robustez para o LIN.
+
+Na Seção \ref{fundamentacao} são discutidos os aspectos relacionados ao LIN e aos métodos de detecção de erros utilizados; a Seção \ref{experimento} expõe o experimento e sua estrutura; em seguida, os resultados desse experimento são apresentados na Seção \ref{resultados}; por fim, na Seção \ref{conclusao} o documento é concluído.
+
+\end{document}
